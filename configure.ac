@@ -21,15 +21,16 @@
 #
 
 # Initialize Autoconf
-AC_PREREQ([2.60])
-AC_INIT([libwayland-egl], [9.3.0],
-        [https://bugs.freedesktop.org/enter_bug.cgi?product=Mesa], [libwayland-egl])
+AC_PREREQ([2.69])
+AC_INIT([libwayland-egl], [17.0.4],
+        [https://bugs.freedesktop.org/enter_bug.cgi?product=Mesa])
 AC_CONFIG_SRCDIR([Makefile.am])
 AC_CONFIG_HEADERS([config.h])
 
 # Initialize Automake
 AM_INIT_AUTOMAKE([foreign dist-bzip2])
 #AM_MAINTAINER_MODE
+AC_CONFIG_MACRO_DIRS([m4])
 
 # Initialize libtool
 AC_PROG_LIBTOOL
@@ -38,4 +39,11 @@ AC_PROG_LIBTOOL
 PKG_CHECK_MODULES([WAYLAND_CLIENT], [wayland-client])
 
 AC_CONFIG_FILES([Makefile wayland-egl.pc])
+
+# Checks for library functions.
+AC_FUNC_MALLOC
+
+## Suggested by libtoolize
+LT_INIT
+
 AC_OUTPUT
