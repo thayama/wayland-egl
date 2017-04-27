@@ -43,7 +43,21 @@ AC_CONFIG_FILES([Makefile wayland-egl.pc])
 # Checks for library functions.
 AC_FUNC_MALLOC
 
+dnl
+dnl Check if linker supports garbage collection
+dnl
+save_LDFLAGS=$LDFLAGS
+LDFLAGS="$LDFLAGS -Wl,--gc-sections"
+AC_MSG_CHECKING([whether ld supports --gc-sections])
+AC_LINK_IFELSE(
+    [AC_LANG_SOURCE([static char UnusedFunc() { return 5; } int main() { return 0;}])],
+    [AC_MSG_RESULT([yes])
+        GC_SECTIONS="-Wl,--gc-sections";],
+    [AC_MSG_RESULT([no])
+        GC_SECTIONS="";])
+LDFLAGS=$save_LDFLAGS
+
 ## Suggested by libtoolize
-LT_INIT
+LT_INIT([disable-static])
 
 AC_OUTPUT
